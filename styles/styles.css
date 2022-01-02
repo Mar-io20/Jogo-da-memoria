@@ -21,6 +21,9 @@ body {
 }
 h1 {
     text-align: center;
+    /*temporario - remover isso*/
+    color: aliceblue; 
+    font-size: 50px;
 }
 
 
