@@ -72,20 +72,19 @@
     </div>
     <script src="js/start-reactor.js"></script>
     <script>
-      const loadButton = document.getElementById("loadButton");
-      const startButton = document.getElementById("startButton");
+      const loadButton = document.getElementById("loadButton")
+      const startButton = document.getElementById("startButton")
 
-      //quando clicar no botão de load, é carreado o botão de play
       loadButton.addEventListener("click", () => {
-        startReactor.load();
-        loadButton.style.display = "none";
-        startButton.style.display = "";
-      });
-      // quando clicar no botão de play, o game começa
+          startReactor.load()
+          loadButton.style.display = "none"
+          startButton.style.display = ""
+      })
+
       startButton.addEventListener("click", () => {
-        startReactor.start();
-        startButton.style.display = "none";
-      });
+          startReactor.start()
+          startButton.style.display = "none"
+      })
     </script>
   </body>
 </html>
