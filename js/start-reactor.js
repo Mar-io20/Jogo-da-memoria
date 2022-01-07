@@ -1,6 +1,4 @@
 startReactor = {
-      //criando arrey e trabalhando com audio
-    
   computerCombination: [],
   playerCombination: [],
   computerCombinationPosition: 1,
@@ -23,13 +21,13 @@ startReactor = {
       "8.mp3",
     ],
 
-    //carregando audio de erro
     loadAudio(filename) {
       const file = `./audio/${filename}?cb=${new Date().getTime()}`;
       const audio = new Audio(file);
       audio.load();
       return audio;
     },
+
     loadAudios() {
       if (typeof startReactor.audio.start == "object") return;
 
@@ -47,13 +45,12 @@ startReactor = {
       );
     },
   },
-    //Com interfaze eu busco os os lugares onde os valores vão entrar
   interface: {
-    memoryPanel: document.querySelector(".painelMemory"), //aqui eu busco a sequencia de botões da maquina
-    computerLedPanel: document.querySelector(".computerLedPanel"), //aqui é selecionado o o valor dos lad esquerdos
-    playerLedPanel: document.querySelector(".playerLedPanel"), //aqui é selecionado o o valor dos lad a direita
-    playerMemory: document.querySelector(".playerMemory"), //aqui eu busco a sequencia de botões do player
-    playerMemoryButtons: document.getElementsByClassName("player_memory"), //aqui eu busco a sequencia de botões apertadas pelo player
+    memoryPanel: document.querySelector(".painelMemory"),
+    computerLedPanel: document.querySelector(".computerLedPanel"),
+    playerLedPanel: document.querySelector(".playerLedPanel"),
+    playerMemory: document.querySelector(".playerMemory"),
+    playerMemoryButtons: document.getElementsByClassName("player_memory"),
 
     turnLedOn(index, ledPanel) {
       ledPanel.children[index].classList.add("ledOn");
@@ -135,6 +132,7 @@ startReactor = {
           playerMemory.children[i].classList.add("playerMemoryActive");
       }
     },
+
     disableButtons() {
       const playerMemory = startReactor.interface.playerMemory;
       playerMemory.classList.remove("playerActive");
@@ -212,6 +210,7 @@ startReactor = {
         }, 1200);
         return;
       }
+
       if (
         startReactor.playerCombination.length ==
         startReactor.computerCombinationPosition
@@ -232,6 +231,7 @@ startReactor = {
       return;
     }
   },
+
   playCombination() {
     startReactor.playerCombination = [];
     startReactor.interface.disableButtons();
