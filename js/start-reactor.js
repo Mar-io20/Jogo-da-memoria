@@ -30,6 +30,21 @@ startReactor = {
         }
 
     },
+    //Com interfaze eu busco os os lugares onde os valores vão entrar
+    interface: {
+        memoryPanel: document.querySelector(".painelMemory"),//aqui eu busco a sequencia de botões da maquina
+        computerLedPanel: document.querySelector("computerLedPanel"),//aqui é selecionado o o valor dos lad esquerdos
+        playerLedPanel: document.querySelector(".playerLedPanel"),//aqui é selecionado o o valor dos lad a direita
+        playerMemory: document.querySelector(".playerMemory"),//aqui eu busco a sequencia de botões do player
+        playerMemoryButtons: document.getElementsByClassName("player_memory"),//aqui eu busco a sequencia de botões apertadas pelo player
+        
+        turnLedOn(index, ledPanel) {
+            ledPanel.children[index].classList.add("ledOn");
+        },
+
+        
+        
+    },
 
     async load() {
         return new Promise(resolve => {
