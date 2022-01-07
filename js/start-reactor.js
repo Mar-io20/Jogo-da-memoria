@@ -165,61 +165,98 @@ startReactor = {
             element.style.animation = "playermemoryClick .4s";
             setTimeout(() => (element.style.animation = ""), 400);
           }
-        })
-      })
-    })
+        });
+      });
+    });
   },
   start() {
-      startReactor.computerCombination = startReactor.createCombination()
-      startReact.computerCombinationPosition = 1
-      startReactor.playerCombination = []
-      startReactor.interface.start().then(() => {
-          setTimeout(() => {
-              startReactor.playerCombination()
-          }, 500)
-      })
+    startReactor.computerCombination = startReactor.createCombination();
+    startReact.computerCombinationPosition = 1;
+    startReactor.playerCombination = [];
+    startReactor.interface.start().then(() => {
+      setTimeout(() => {
+        startReactor.playerCombination();
+      }, 500);
+    });
   },
 
   createCombination() {
-      let newCombination = []
-      for (let n = 0; n < startReactor.combinationMaxPosition; n++){
-          const position = Math.floor((Math.random() * startReactor.memoryMaxCombination) +1)
-          newCombination.push(positon-1)
-      }
-      return newCombination
+    let newCombination = [];
+    for (let n = 0; n < startReactor.combinationMaxPosition; n++) {
+      const position = Math.floor(
+        Math.random() * startReactor.memoryMaxCombination + 1
+      );
+      newCombination.push(positon - 1);
+    }
+    return newCombination;
   },
 
   play(index) {
-      startReactor.interface.playItem(index, startReactor.playerCombination.length, 'player')
-      startReactor.playerCombination.push(index)
+    startReactor.interface.playItem(
+      index,
+      startReactor.playerCombination.length,
+      "player"
+    );
+    startReactor.playerCombination.push(index);
 
-      if (startReactor.isTheRigthCombination(startReactor.playerCombination.length)) {
-          if (startReactor.playerCombination.length == startReactor.combinationMaxposition) {
-              startReactor.interface.endGame("complete")
-              setTimeout(() => {
-                  startReactor.start()
-              }, 1200)
-              return
-          }
-          if (startReactor.playerCombination,length == startReactor.computerCombinationPosition) {
-              startReactor.computerCombinationPosition++
-              setTimeout(() => {
-                  startReactor.playCombination()
-              }, 1200)
-              return
-          }
-      } else {
-          startReactor.interface.endGame("fail")
-          document.getElementById("title").textContent = "Você é o impostor"
-          setTimeout(() => {
-              document.getElementById("title").textContent = "START REACTOR"
-              startReactor.start()
-          }, 1400)
-          return
+    if (
+      startReactor.isTheRigthCombination(startReactor.playerCombination.length)
+    ) {
+      if (
+        startReactor.playerCombination.length ==
+        startReactor.combinationMaxposition
+      ) {
+        startReactor.interface.endGame("complete");
+        setTimeout(() => {
+          startReactor.start();
+        }, 1200);
+        return;
       }
+      if (
+        (startReactor.playerCombination,
+        length == startReactor.computerCombinationPosition)
+      ) {
+        startReactor.computerCombinationPosition++;
+        setTimeout(() => {
+          startReactor.playCombination();
+        }, 1200);
+        return;
+      }
+    } else {
+      startReactor.interface.endGame("fail");
+      document.getElementById("title").textContent = "Você é o impostor";
+      setTimeout(() => {
+        document.getElementById("title").textContent = "START REACTOR";
+        startReactor.start();
+      }, 1400);
+      return;
+    }
   },
-  
+  playCombination() {
+    startReactor.playerCombination = [];
+    startReactor.interface.disableButtons();
+    startReactor.interface.turnAllLedsOff();
 
+    for (let i = 0; i <= startReactor.computerCombinationPosition - 1; i++) {
+      setTimeout(() => {
+        startReactor.interface.playItem(startReactor.computerCombination[i], i);
+      }, 400 * (i + 1));
+    }
 
+    setTimeout(() => {
+      startReactor.interface.turnAllLedsOff();
+      startReactor.interface.enableButtons();
+    }, 600 * startReactor.computerCombinationPosition);
+  },
 
+  isTheRightCombination(position) {
+    let computerCombination = startReactor.computerCombination.slice(
+      0,
+      position
+    );
+    return (
+      computerCombination.toString() ==
+      startReactor.playerCombination.toString()
+    );
+  },
 };
