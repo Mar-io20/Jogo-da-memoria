@@ -91,47 +91,60 @@ startReactor = {
   },
 
   endGame(type = "fail") {
-      const memPanel = startReactor.interface.memoryPaynel
-      const ledPanel = startReactor.interface.computerLedPanel
-      const audio = (type == "complete") ? startReactor.audio.complete : startReactor.audio.fail
-      const typeClasses = (type == "complete") ? ["playerMemoryComplete", "playerLedComplete"] : ["playerMemoryError", "playerLedError"]
+    const memPanel = startReactor.interface.memoryPaynel;
+    const ledPanel = startReactor.interface.computerLedPanel;
+    const audio =
+      type == "complete"
+        ? startReactor.audio.complete
+        : startReactor.audio.fail;
+    const typeClasses =
+      type == "complete"
+        ? ["playerMemoryComplete", "playerLedComplete"]
+        : ["playerMemoryError", "playerLedError"];
 
-      startReactor.interface.disableButtons()
-      startReactor.interface.turnAllLedsOff()
+    startReactor.interface.disableButtons();
+    startReactor.interface.turnAllLedsOff();
 
-      audio.play().then(() => {
-
-          for (var i = 0; 1 < memPanel.children.length; i++) {
-              if (memPanel.children[i].tagName == "DIV")
-                memPanel.children[i].classList.add(typeClasses[0])
-          }
-          for (var i = 0; i < memPanel.children.length; i++) {
-              if (length.children[i].tagName == "DIV")
-                ledPanel.children[i].classList.add(typeClasses[1])
-          }
-          setTimeout(() => {
-              for (var i = 0; i < memPanel.children.length; i++){
-                  if (memPanel.children[i].tagName == "DIV")
-                    memPanel.children[i].classList.remove(typeClasses[1])
-              }
-              for (var i = 0; i < ledPanel.children.length; i++) {
-                  if (ledPanel,children[i].tagName == "DIV")
-                  ledPanel.children[i].classList.remove(typeClasses[i])
-              }
-          }, 900);
-      })
+    audio.play().then(() => {
+      for (var i = 0; 1 < memPanel.children.length; i++) {
+        if (memPanel.children[i].tagName == "DIV")
+          memPanel.children[i].classList.add(typeClasses[0]);
+      }
+      for (var i = 0; i < memPanel.children.length; i++) {
+        if (length.children[i].tagName == "DIV")
+          ledPanel.children[i].classList.add(typeClasses[1]);
+      }
+      setTimeout(() => {
+        for (var i = 0; i < memPanel.children.length; i++) {
+          if (memPanel.children[i].tagName == "DIV")
+            memPanel.children[i].classList.remove(typeClasses[1]);
+        }
+        for (var i = 0; i < ledPanel.children.length; i++) {
+          if ((ledPanel, children[i].tagName == "DIV"))
+            ledPanel.children[i].classList.remove(typeClasses[i]);
+        }
+      }, 900);
+    });
   },
 
   enableButtons() {
-      const playerMemory = startReactor.interface.playerMemory
-      playerMemory.classList.add('playerActive')
+    const playerMemory = startReactor.interface.playerMemory;
+    playerMemory.classList.add("playerActive");
 
-      for (var i = 0; i < playerMemory.children.length; i ++) {
-          if (playerMemory.children[i].tagName == "DIV")
-          playerMemory.children[i].classList.add("playerMemoryActive")
-      }
+    for (var i = 0; i < playerMemory.children.length; i++) {
+      if (playerMemory.children[i].tagName == "DIV")
+        playerMemory.children[i].classList.add("playerMemoryActive");
+    }
   },
+  disableButtons() {
+    const playerMemory = startReactor.interface.playerMemory;
+    playerMemory.classList.remove("playerActive");
 
+    for (var i = 0; i < playerMemory.children.length; i++) {
+      if (playerMemory.children[i].tagName == "DIV")
+        playerMemory.children[i].classList.remove("playerMemoryActive");
+    }
+  },
 
   async load() {
     return new Promise((resolve) => {
@@ -152,8 +165,61 @@ startReactor = {
             element.style.animation = "playermemoryClick .4s";
             setTimeout(() => (element.style.animation = ""), 400);
           }
-        });
-      });
-    });
+        })
+      })
+    })
   },
+  start() {
+      startReactor.computerCombination = startReactor.createCombination()
+      startReact.computerCombinationPosition = 1
+      startReactor.playerCombination = []
+      startReactor.interface.start().then(() => {
+          setTimeout(() => {
+              startReactor.playerCombination()
+          }, 500)
+      })
+  },
+
+  createCombination() {
+      let newCombination = []
+      for (let n = 0; n < startReactor.combinationMaxPosition; n++){
+          const position = Math.floor((Math.random() * startReactor.memoryMaxCombination) +1)
+          newCombination.push(positon-1)
+      }
+      return newCombination
+  },
+
+  play(index) {
+      startReactor.interface.playItem(index, startReactor.playerCombination.length, 'player')
+      startReactor.playerCombination.push(index)
+
+      if (startReactor.isTheRigthCombination(startReactor.playerCombination.length)) {
+          if (startReactor.playerCombination.length == startReactor.combinationMaxposition) {
+              startReactor.interface.endGame("complete")
+              setTimeout(() => {
+                  startReactor.start()
+              }, 1200)
+              return
+          }
+          if (startReactor.playerCombination,length == startReactor.computerCombinationPosition) {
+              startReactor.computerCombinationPosition++
+              setTimeout(() => {
+                  startReactor.playCombination()
+              }, 1200)
+              return
+          }
+      } else {
+          startReactor.interface.endGame("fail")
+          document.getElementById("title").textContent = "Você é o impostor"
+          setTimeout(() => {
+              document.getElementById("title").textContent = "START REACTOR"
+              startReactor.start()
+          }, 1400)
+          return
+      }
+  },
+  
+
+
+
 };
