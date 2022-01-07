@@ -13,7 +13,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 * [codigo fonte tv](https://www.youtube.com/results?search_query=codigo+fonte+tv+among+us)
 * Base de como trabalhar com audio no JavaScript puro [DevPleno](https://www.youtube.com/watch?v=ESq1xOs2HsU), [ti-enxame](https://www.ti-enxame.com/pt/javascript/reproduzindo-audio-com-javascript/942093167/)
-* Conferindo o histrico para trazer mais links
+* Conferindo o histórico para trazer mais links.
 
 
 ## 📫 Contribuindo para Jogo-damemoria
