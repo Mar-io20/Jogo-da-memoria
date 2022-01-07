@@ -1,9 +1,9 @@
 startReactor = {
-  //criando arrey e trabalhando com audio
-
+      //criando arrey e trabalhando com audio
+    
   computerCombination: [],
   playerCombination: [],
-  computerCobinationPosition: 1,
+  computerCombinationPosition: 1,
   combinationMaxPosition: 5,
   memoryMaxCombination: 9,
 
@@ -30,7 +30,7 @@ startReactor = {
       audio.load();
       return audio;
     },
-    loadAudio() {
+    loadAudios() {
       if (typeof startReactor.audio.start == "object") return;
 
       startReactor.audio.start = startReactor.audio.loadAudio(
@@ -47,10 +47,10 @@ startReactor = {
       );
     },
   },
-  //Com interfaze eu busco os os lugares onde os valores vão entrar
+    //Com interfaze eu busco os os lugares onde os valores vão entrar
   interface: {
     memoryPanel: document.querySelector(".painelMemory"), //aqui eu busco a sequencia de botões da maquina
-    computerLedPanel: document.querySelector("computerLedPanel"), //aqui é selecionado o o valor dos lad esquerdos
+    computerLedPanel: document.querySelector(".computerLedPanel"), //aqui é selecionado o o valor dos lad esquerdos
     playerLedPanel: document.querySelector(".playerLedPanel"), //aqui é selecionado o o valor dos lad a direita
     playerMemory: document.querySelector(".playerMemory"), //aqui eu busco a sequencia de botões do player
     playerMemoryButtons: document.getElementsByClassName("player_memory"), //aqui eu busco a sequencia de botões apertadas pelo player
@@ -64,8 +64,8 @@ startReactor = {
       const playerLedPanel = startReactor.interface.playerLedPanel;
 
       for (var i = 0; i < computerLedPanel.children.length; i++) {
-        computerLedPanel.children[1].classList.remove("ledOn");
-        playerLedPanel.children[1].classList.remove("ledOn");
+        computerLedPanel.children[i].classList.remove("ledOn");
+        playerLedPanel.children[i].classList.remove("ledOn");
       }
     },
 
@@ -73,7 +73,7 @@ startReactor = {
       return startReactor.audio.start.play();
     },
 
-    playerItem(index, combinationPosition, location = "computer") {
+    playItem(index, combinationPosition, location = "computer") {
       const leds =
         location == "computer"
           ? startReactor.interface.computerLedPanel
@@ -82,84 +82,84 @@ startReactor = {
 
       memPanel.classList.add("memoryActive");
       startReactor.interface.turnLedOn(combinationPosition, leds);
-      startReact.audio.combinations[index].play().then(() => {
+      startReactor.audio.combinations[index].play().then(() => {
         setTimeout(() => {
           memPanel.classList.remove("memoryActive");
         }, 150);
       });
     },
-  },
 
-  endGame(type = "fail") {
-    const memPanel = startReactor.interface.memoryPaynel;
-    const ledPanel = startReactor.interface.computerLedPanel;
-    const audio =
-      type == "complete"
-        ? startReactor.audio.complete
-        : startReactor.audio.fail;
-    const typeClasses =
-      type == "complete"
-        ? ["playerMemoryComplete", "playerLedComplete"]
-        : ["playerMemoryError", "playerLedError"];
+    endGame(type = "fail") {
+      const memPanel = startReactor.interface.memoryPanel;
+      const ledPanel = startReactor.interface.computerLedPanel;
+      const audio =
+        type == "complete"
+          ? startReactor.audio.complete
+          : startReactor.audio.fail;
+      const typeClasses =
+        type == "complete"
+          ? ["playerMemoryComplete", "playerLedComplete"]
+          : ["playerMemoryError", "playerLedError"];
 
-    startReactor.interface.disableButtons();
-    startReactor.interface.turnAllLedsOff();
+      startReactor.interface.disableButtons();
+      startReactor.interface.turnAllLedsOff();
 
-    audio.play().then(() => {
-      for (var i = 0; 1 < memPanel.children.length; i++) {
-        if (memPanel.children[i].tagName == "DIV")
-          memPanel.children[i].classList.add(typeClasses[0]);
-      }
-      for (var i = 0; i < memPanel.children.length; i++) {
-        if (length.children[i].tagName == "DIV")
-          ledPanel.children[i].classList.add(typeClasses[1]);
-      }
-      setTimeout(() => {
+      audio.play().then(() => {
         for (var i = 0; i < memPanel.children.length; i++) {
           if (memPanel.children[i].tagName == "DIV")
-            memPanel.children[i].classList.remove(typeClasses[1]);
+            memPanel.children[i].classList.add(typeClasses[0]);
         }
         for (var i = 0; i < ledPanel.children.length; i++) {
-          if ((ledPanel, children[i].tagName == "DIV"))
-            ledPanel.children[i].classList.remove(typeClasses[i]);
+          if (ledPanel.children[i].tagName == "DIV")
+            ledPanel.children[i].classList.add(typeClasses[1]);
         }
-      }, 900);
-    });
-  },
+        setTimeout(() => {
+          for (var i = 0; i < memPanel.children.length; i++) {
+            if (memPanel.children[i].tagName == "DIV")
+              memPanel.children[i].classList.remove(typeClasses[0]);
+          }
+          for (var i = 0; i < ledPanel.children.length; i++) {
+            if (ledPanel.children[i].tagName == "DIV")
+              ledPanel.children[i].classList.remove(typeClasses[1]);
+          }
+        }, 900);
+      });
+    },
 
-  enableButtons() {
-    const playerMemory = startReactor.interface.playerMemory;
-    playerMemory.classList.add("playerActive");
+    enableButtons() {
+      const playerMemory = startReactor.interface.playerMemory;
+      playerMemory.classList.add("playerActive");
 
-    for (var i = 0; i < playerMemory.children.length; i++) {
-      if (playerMemory.children[i].tagName == "DIV")
-        playerMemory.children[i].classList.add("playerMemoryActive");
-    }
-  },
-  disableButtons() {
-    const playerMemory = startReactor.interface.playerMemory;
-    playerMemory.classList.remove("playerActive");
+      for (var i = 0; i < playerMemory.children.length; i++) {
+        if (playerMemory.children[i].tagName == "DIV")
+          playerMemory.children[i].classList.add("playerMemoryActive");
+      }
+    },
+    disableButtons() {
+      const playerMemory = startReactor.interface.playerMemory;
+      playerMemory.classList.remove("playerActive");
 
-    for (var i = 0; i < playerMemory.children.length; i++) {
-      if (playerMemory.children[i].tagName == "DIV")
-        playerMemory.children[i].classList.remove("playerMemoryActive");
-    }
+      for (var i = 0; i < playerMemory.children.length; i++) {
+        if (playerMemory.children[i].tagName == "DIV")
+          playerMemory.children[i].classList.remove("playerMemoryActive");
+      }
+    },
   },
 
   async load() {
     return new Promise((resolve) => {
       console.log("Loading Game...");
-      startReactor.audio.loadAudio();
+      startReactor.audio.loadAudios();
 
       const playerMemory = startReactor.interface.playerMemory;
       const memory = startReactor.interface.playerMemoryButtons;
 
       Array.prototype.forEach.call(memory, (element) => {
-        element.addEventListner("click", () => {
+        element.addEventListener("click", () => {
           if (playerMemory.classList.contains("playerActive")) {
             startReactor.play(parseInt(element.dataset.memory));
             console.log(
-              "o valor do elemento clicado é:" + element.dataset.memory
+              "O valor do elemento clicado é: " + element.dataset.memory
             );
 
             element.style.animation = "playermemoryClick .4s";
@@ -171,11 +171,11 @@ startReactor = {
   },
   start() {
     startReactor.computerCombination = startReactor.createCombination();
-    startReact.computerCombinationPosition = 1;
+    startReactor.computerCombinationPosition = 1;
     startReactor.playerCombination = [];
     startReactor.interface.start().then(() => {
       setTimeout(() => {
-        startReactor.playerCombination();
+        startReactor.playCombination();
       }, 500);
     });
   },
@@ -186,7 +186,7 @@ startReactor = {
       const position = Math.floor(
         Math.random() * startReactor.memoryMaxCombination + 1
       );
-      newCombination.push(positon - 1);
+      newCombination.push(position - 1);
     }
     return newCombination;
   },
@@ -200,11 +200,11 @@ startReactor = {
     startReactor.playerCombination.push(index);
 
     if (
-      startReactor.isTheRigthCombination(startReactor.playerCombination.length)
+      startReactor.isTheRightCombination(startReactor.playerCombination.length)
     ) {
       if (
         startReactor.playerCombination.length ==
-        startReactor.combinationMaxposition
+        startReactor.combinationMaxPosition
       ) {
         startReactor.interface.endGame("complete");
         setTimeout(() => {
@@ -213,8 +213,8 @@ startReactor = {
         return;
       }
       if (
-        (startReactor.playerCombination,
-        length == startReactor.computerCombinationPosition)
+        startReactor.playerCombination.length ==
+        startReactor.computerCombinationPosition
       ) {
         startReactor.computerCombinationPosition++;
         setTimeout(() => {
