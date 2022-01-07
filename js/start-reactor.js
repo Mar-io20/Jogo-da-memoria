@@ -42,7 +42,15 @@ startReactor = {
             ledPanel.children[index].classList.add("ledOn");
         },
 
-        
+        turnAllLedsOff() {
+            const computerLedPanel = startReactor.interface.computerLedPanel
+            const playerLedPanel = startReactor.interface.playerLedPanel
+
+            for (var i = 0; i < computerLedPanel.children.length; i++){
+                computerLedPanel.children[1].classList.remove("ledOn");
+                playerLedPanel.children[1].classList.remove("ledOn");
+            }
+        },
         
     },
 
